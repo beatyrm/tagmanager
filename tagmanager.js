@@ -229,7 +229,12 @@
 
         obj.trigger('tm:spliced', tagBeingRemoved);
 
-        // console.log(tlis);
+        // AjaxPush tag removal
+        if (tagManagerOptions.AjaxPush != null) {
+            $.post(tagManagerOptions.AjaxPush, $.extend({ rtag: tagBeingRemoved }, tagManagerOptions.AjaxPushParameters));
+        }
+
+        console.log(tagBeingRemoved);
       }
 
 
@@ -294,12 +299,13 @@
         tlis.push(tag);
         tlid.push(tagId);
 
-        if (!ignore_events)
+        if (!ignore_events) {
           if (tagManagerOptions.AjaxPush != null) {
             if ($.inArray(tag, tagManagerOptions.prefilled) == -1) {
               $.post(tagManagerOptions.AjaxPush, $.extend({ tag: tag }, tagManagerOptions.AjaxPushParameters));
             }
           }
+        }
 
         // console.log("tagList: " + tlis);
 
